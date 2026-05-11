@@ -335,15 +335,79 @@
       color: var(--muted); font-size: 0.8rem;
     }
 
+    /* ── SCROLL ANIMATIONS ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.55s cubic-bezier(0.4,0,0.2,1),
+                  transform 0.55s cubic-bezier(0.4,0,0.2,1);
+      transition-delay: calc(var(--delay, 0) * 1ms);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+    }
+
+    /* ── MOBILE NAV / HAMBURGER ── */
+    .hamburger {
+      display: none;
+      flex-direction: column; justify-content: center; gap: 5px;
+      background: none; border: none; cursor: pointer;
+      padding: 6px; z-index: 200;
+    }
+    .hamburger span {
+      display: block; width: 22px; height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: transform 0.25s, opacity 0.25s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed; inset: 60px 0 0 0; z-index: 90;
+      background: rgba(15,17,23,0.97);
+      backdrop-filter: blur(12px);
+      flex-direction: column; align-items: center;
+      justify-content: center; gap: 2rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      color: var(--text); text-decoration: none;
+      font-size: 1.4rem; font-weight: 600;
+      transition: color 0.2s;
+    }
+    .mobile-menu a:hover { color: var(--accent); }
+    .mobile-menu .lang-toggle {
+      font-size: 1rem; padding: 0.5rem 1.2rem;
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       nav { padding: 0 1rem; }
       .nav-links { gap: 1rem; }
       .nav-links li:not(:last-child) { display: none; }
+      .nav-links li:last-child { display: none; } /* hide desktop lang toggle */
+      .hamburger { display: flex; }
       section { padding: 4rem 1.25rem; }
       .about-grid { grid-template-columns: 1fr; gap: 2rem; }
       .skills-grid { grid-template-columns: 1fr; }
       .kcard.open { grid-column: span 1; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .knowledge-grid { grid-template-columns: 1fr; }
+      h2 { font-size: 1.6rem; }
+      .hero-scroll { margin-top: 3rem; }
+      .contact-links { flex-direction: column; align-items: center; }
+    }
+    @media (max-width: 480px) {
+      .hero-name { font-size: 2.2rem; }
+      .btn-ghost { margin-left: 0; margin-top: 0.75rem; }
+      .btn + .btn-ghost { display: block; width: fit-content; }
     }
   </style>
 </head>
@@ -353,15 +417,29 @@
 <nav>
   <div class="nav-logo">NS</div>
   <ul class="nav-links">
-    <li><a href="#about"  data-en="About"      data-th="เกี่ยวกับ">About</a></li>
+    <li><a href="#about"      data-en="About"      data-th="เกี่ยวกับ">About</a></li>
     <li><a href="#experience" data-en="Experience"  data-th="ประสบการณ์">Experience</a></li>
-    <li><a href="#skills" data-en="Skills"     data-th="ทักษะ">Skills</a></li>
-    <li><a href="#projects" data-en="Projects"   data-th="โปรเจกต์">Projects</a></li>
-    <li><a href="#knowledge" data-en="Knowledge"  data-th="ความรู้">Knowledge</a></li>
-    <li><a href="#contact" data-en="Contact"    data-th="ติดต่อ">Contact</a></li>
+    <li><a href="#skills"     data-en="Skills"      data-th="ทักษะ">Skills</a></li>
+    <li><a href="#projects"   data-en="Projects"    data-th="โปรเจกต์">Projects</a></li>
+    <li><a href="#knowledge"  data-en="Knowledge"   data-th="ความรู้">Knowledge</a></li>
+    <li><a href="#contact"    data-en="Contact"     data-th="ติดต่อ">Contact</a></li>
     <li><button class="lang-toggle" id="langToggle">TH</button></li>
   </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- ── MOBILE MENU ── -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about"      data-en="About"      data-th="เกี่ยวกับ">About</a>
+  <a href="#experience" data-en="Experience"  data-th="ประสบการณ์">Experience</a>
+  <a href="#skills"     data-en="Skills"      data-th="ทักษะ">Skills</a>
+  <a href="#projects"   data-en="Projects"    data-th="โปรเจกต์">Projects</a>
+  <a href="#knowledge"  data-en="Knowledge"   data-th="ความรู้">Knowledge</a>
+  <a href="#contact"    data-en="Contact"     data-th="ติดต่อ">Contact</a>
+  <button class="lang-toggle" id="langToggleMobile">TH</button>
+</div>
 
 <!-- ── HERO ── -->
 <section id="hero">
@@ -746,9 +824,12 @@
 </footer>
 
 <script>
-  // ── Language Toggle ──
+  // ── Language Toggle (synced desktop + mobile) ──
   let lang = 'en';
-  const toggle = document.getElementById('langToggle');
+  const toggles = [
+    document.getElementById('langToggle'),
+    document.getElementById('langToggleMobile')
+  ];
 
   function applyLang() {
     document.querySelectorAll('[data-en]').forEach(el => {
@@ -760,38 +841,92 @@
         el.innerHTML = val;
       }
     });
-    toggle.textContent = lang === 'en' ? 'TH' : 'EN';
+    const label = lang === 'en' ? 'TH' : 'EN';
+    toggles.forEach(t => { if (t) t.textContent = label; });
     document.documentElement.lang = lang;
   }
 
-  toggle.addEventListener('click', () => {
-    lang = lang === 'en' ? 'th' : 'en';
-    applyLang();
+  toggles.forEach(t => {
+    if (!t) return;
+    t.addEventListener('click', () => { lang = lang === 'en' ? 'th' : 'en'; applyLang(); });
+  });
+
+  // ── Smooth Scroll (with fixed-nav offset) ──
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', e => {
+      const target = document.querySelector(link.getAttribute('href'));
+      if (!target) return;
+      e.preventDefault();
+      const top = target.getBoundingClientRect().top + window.scrollY - 68;
+      window.scrollTo({ top, behavior: 'smooth' });
+      // close mobile menu if open
+      mobileMenu.classList.remove('open');
+      hamburger.classList.remove('open');
+    });
+  });
+
+  // ── Hamburger / Mobile Menu ──
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  hamburger.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('open');
+    hamburger.classList.toggle('open', isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
   });
 
   // ── Knowledge Cards ──
   function toggleCard(card) {
     const isOpen = card.classList.contains('open');
-    // Close all open cards
     document.querySelectorAll('.kcard.open').forEach(c => c.classList.remove('open'));
-    // Open clicked if it wasn't open
     if (!isOpen) card.classList.add('open');
   }
 
   // ── Scroll-based nav highlight ──
   const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+  const allNavLinks = document.querySelectorAll('a[href^="#"]');
 
   window.addEventListener('scroll', () => {
     let current = '';
     sections.forEach(s => {
       if (window.scrollY >= s.offsetTop - 80) current = s.id;
     });
-    navLinks.forEach(a => {
-      a.style.color = a.getAttribute('href') === '#' + current
-        ? 'var(--accent)' : '';
+    allNavLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--accent)' : '';
     });
   }, { passive: true });
+
+  // ── Scroll Reveal (IntersectionObserver) ──
+  // Assign reveal class + stagger delay to target elements
+  const revealSelectors = [
+    { sel: '.hero-tag, .hero-name, .hero-title, .hero-desc, #hero .btn, .hero-scroll', base: 0, step: 80 },
+    { sel: '.section-label, h2',          base: 0,   step: 60  },
+    { sel: '.about-text p',               base: 100, step: 80  },
+    { sel: '.meta-item',                  base: 100, step: 70  },
+    { sel: '.tl-item',                    base: 50,  step: 90  },
+    { sel: '.skill-group',                base: 50,  step: 100 },
+    { sel: '.project-card',               base: 50,  step: 100 },
+    { sel: '.kcard',                      base: 30,  step: 60  },
+    { sel: '.contact-box',                base: 0,   step: 0   },
+  ];
+
+  revealSelectors.forEach(({ sel, base, step }) => {
+    document.querySelectorAll(sel).forEach((el, i) => {
+      el.classList.add('reveal');
+      el.style.setProperty('--delay', base + i * step);
+    });
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
