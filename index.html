@@ -197,7 +197,7 @@
     /* ── SKILLS ── */
     #skills { background: var(--bg2); }
     .skills-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr);
+      display: grid; grid-template-columns: repeat(4, 1fr);
       gap: 1.5rem;
     }
     .skill-group {
@@ -249,6 +249,23 @@
     }
     .project-stack {
       display: flex; flex-wrap: wrap; gap: 0.4rem;
+    }
+    .project-link {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      margin-top: 1rem;
+      color: var(--accent); font-size: 0.82rem; font-weight: 600;
+      text-decoration: none; border: 1px solid rgba(245,158,11,0.3);
+      padding: 0.35rem 0.8rem; border-radius: 6px;
+      transition: background 0.2s, border-color 0.2s;
+      background: rgba(245,158,11,0.06);
+    }
+    .project-link:hover {
+      background: rgba(245,158,11,0.15);
+      border-color: var(--accent);
+    }
+    .project-card.featured {
+      border-color: rgba(245,158,11,0.25);
+      background: linear-gradient(135deg, var(--bg3) 0%, rgba(245,158,11,0.03) 100%);
     }
 
     /* ── KNOWLEDGE SHOWCASE ── */
@@ -396,7 +413,7 @@
       .hamburger { display: flex; }
       section { padding: 4rem 1.25rem; }
       .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-      .skills-grid { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: repeat(2, 1fr); }
       .kcard.open { grid-column: span 1; }
       .projects-grid { grid-template-columns: 1fr; }
       .knowledge-grid { grid-template-columns: 1fr; }
@@ -408,6 +425,7 @@
       .hero-name { font-size: 2.2rem; }
       .btn-ghost { margin-left: 0; margin-top: 0.75rem; }
       .btn + .btn-ghost { display: block; width: fit-content; }
+      .skills-grid { grid-template-columns: 1fr; }
     }
 
     /* ── LOCK SYSTEM ── */
@@ -645,15 +663,15 @@
           <span style="background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.4);color:var(--accent);font-size:0.65rem;padding:0.1rem 0.5rem;border-radius:3px;letter-spacing:0.08em;"
                 data-en="PRESENT" data-th="ปัจจุบัน">PRESENT</span>
         </div>
-        <div class="tl-role" data-en="Software Engineer" data-th="วิศวกรซอฟต์แวร์">Software Engineer</div>
-        <div class="tl-period" data-en="F&amp;B Tech · Thailand" data-th="F&amp;B Tech · ไทย">F&amp;B Tech · Thailand</div>
+        <div class="tl-role" data-en="Software Developer" data-th="นักพัฒนาซอฟต์แวร์">Software Developer</div>
+        <div class="tl-period" data-en="Low-Code Development · Thailand" data-th="Low-Code Development · ไทย">Low-Code Development · Thailand</div>
         <div class="tl-desc"
-             data-en="Built full-stack systems for restaurant operations — LINE-based POS, IoT kitchen display boards (ESP32/MQTT), and cost-analysis dashboards. Integrated Supabase for real-time data."
-             data-th="สร้างระบบ full-stack สำหรับการดำเนินงานร้านอาหาร — POS ผ่าน LINE, บอร์ดแสดงผล IoT ในครัว (ESP32/MQTT) และ dashboard วิเคราะห์ต้นทุน เชื่อมต่อ Supabase สำหรับข้อมูล real-time">
-          Built full-stack systems for restaurant operations — LINE-based POS, IoT kitchen display boards (ESP32/MQTT), and cost-analysis dashboards. Integrated Supabase for real-time data.
+             data-en="Developed applications using Mendix for clients including the <strong>Thai Red Cross</strong>, <strong>TTTC (Toyota Tsusho)</strong>, and <strong>Mahajak</strong> (full-service audio solutions). Collaborated closely with system analysts and project managers to identify the most effective approaches for building scalable web app services."
+             data-th="พัฒนา application ด้วย <strong>Mendix</strong> ให้ลูกค้าเช่น <strong>สภากาชาดไทย</strong>, <strong>TTTC (Toyota Tsusho)</strong>, <strong>Mahajak</strong> (บริการเครื่องเสียงครบวงจร) โดยทำงานร่วมกับ system analyst และ project manager เพื่อหาแนวทางที่มีประสิทธิภาพสูงสุดในการพัฒนา web app services">
+          Developed applications using Mendix for clients including the <strong>Thai Red Cross</strong>, <strong>TTTC (Toyota Tsusho)</strong>, and <strong>Mahajak</strong> (full-service audio solutions). Collaborated closely with system analysts and project managers to identify the most effective approaches for building scalable web app services.
         </div>
         <div class="tl-tags">
-          <span class="tag">Node.js</span><span class="tag">Supabase</span><span class="tag">ESP32</span><span class="tag">MQTT</span><span class="tag">LINE API</span>
+          <span class="tag">Mendix</span><span class="tag">Low-Code</span><span class="tag">Web App</span><span class="tag">System Analysis</span><span class="tag">Client Services</span>
         </div>
       </div>
 
@@ -673,15 +691,43 @@
 
       <div class="tl-item">
         <div class="tl-company">CPF / Axons</div>
-        <div class="tl-role" data-en="Software Engineer" data-th="วิศวกรซอฟต์แวร์">Software Engineer</div>
-        <div class="tl-period" data-en="Food Tech · Thailand" data-th="Food Tech · ไทย">Food Tech · Thailand</div>
+        <div class="tl-role" data-en="Software Developer" data-th="นักพัฒนาซอฟต์แวร์">Software Developer</div>
+        <div class="tl-period" data-en="Enterprise Software · Thailand" data-th="Enterprise Software · ไทย">Enterprise Software · Thailand</div>
         <div class="tl-desc"
-             data-en="Developed software tools for food-tech operations. Worked within Axons' tech ecosystem serving CPF's supply chain and production intelligence needs."
-             data-th="พัฒนาเครื่องมือซอฟต์แวร์สำหรับการดำเนินงาน food-tech ทำงานภายในระบบนิเวศเทคโนโลยีของ Axons ที่ให้บริการด้าน supply chain และข่าวกรองการผลิตของ CPF">
-          Developed software tools for food-tech operations. Worked within Axons' tech ecosystem serving CPF's supply chain and production intelligence needs.
+             data-en="Developed an <strong>internal application using Mendix</strong> to manage asset and document transfers across CPF's operations — covering factories, distribution centres, and retail branches."
+             data-th="พัฒนา <strong>application ภายในด้วย Mendix</strong> สำหรับจัดการการโอนย้าย asset และเอกสารระหว่างโรงงาน, ศูนย์กระจายสินค้า และสาขาปลีกของ CPF">
+          Developed an <strong>internal application using Mendix</strong> to manage asset and document transfers across CPF's operations — covering factories, distribution centres, and retail branches.
         </div>
         <div class="tl-tags">
-          <span class="tag">Software Development</span><span class="tag">Food Tech</span><span class="tag">Supply Chain</span>
+          <span class="tag">Mendix</span><span class="tag">Internal App</span><span class="tag">Asset Management</span><span class="tag">Supply Chain</span>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-company" data-en="Freelance Tutor" data-th="ติวเตอร์อิสระ">Freelance Tutor</div>
+        <div class="tl-role" data-en="Physics &amp; Engineering Tutor" data-th="ติวเตอร์ฟิสิกส์ &amp; วิศวกรรม">Physics &amp; Engineering Tutor</div>
+        <div class="tl-period" data-en="Freelance · Thailand" data-th="อิสระ · ไทย">Freelance · Thailand</div>
+        <div class="tl-desc"
+             data-en="Tutored students in physics and engineering subjects. Developed structured lesson plans and problem-solving frameworks tailored to individual learners."
+             data-th="สอนนักเรียนในวิชาฟิสิกส์และวิศวกรรมศาสตร์ พัฒนาแผนการสอนและแนวทางแก้ปัญหาที่ปรับให้เหมาะกับผู้เรียนแต่ละคน">
+          Tutored students in physics and engineering subjects. Developed structured lesson plans and problem-solving frameworks tailored to individual learners.
+        </div>
+        <div class="tl-tags">
+          <span class="tag">Physics</span><span class="tag">Engineering</span><span class="tag">Teaching</span>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-company">ECTI-CARD Conference</div>
+        <div class="tl-role" data-en="Research Presenter" data-th="นักวิจัย / ผู้นำเสนอ">Research Presenter</div>
+        <div class="tl-period" data-en="Academic · Thailand" data-th="วิชาการ · ไทย">Academic · Thailand</div>
+        <div class="tl-desc"
+             data-en="Presented research at the ECTI-CARD (Electronics, Computer, Telecommunications and Information Technology) conference. Contributed to academic discourse in engineering and technology."
+             data-th="นำเสนองานวิจัยในงานประชุม ECTI-CARD (Electronics, Computer, Telecommunications and Information Technology) มีส่วนร่วมในการแลกเปลี่ยนทางวิชาการด้านวิศวกรรมและเทคโนโลยี">
+          Presented research at the ECTI-CARD (Electronics, Computer, Telecommunications and Information Technology) conference. Contributed to academic discourse in engineering and technology.
+        </div>
+        <div class="tl-tags">
+          <span class="tag">Research</span><span class="tag">ECTI-CARD</span><span class="tag">Academic</span>
         </div>
       </div>
 
@@ -715,12 +761,13 @@
         <div class="skill-group-title" data-en="Engineering" data-th="วิศวกรรม">Engineering</div>
         <ul class="skill-list">
           <li data-en="IL6S / CI Pillars" data-th="IL6S / CI Pillars">IL6S / CI Pillars</li>
-          <li data-en="Lean Manufacturing" data-th="Lean Manufacturing">Lean Manufacturing</li>
+          <li data-en="Lean / Six Sigma" data-th="Lean / Six Sigma">Lean / Six Sigma</li>
           <li data-en="Process Control (SPC)" data-th="Process Control (SPC)">Process Control (SPC)</li>
           <li data-en="OEE & Loss Elimination" data-th="OEE & การกำจัด Loss">OEE & Loss Elimination</li>
           <li data-en="Root Cause Analysis" data-th="การวิเคราะห์สาเหตุรากเหง้า">Root Cause Analysis</li>
           <li data-en="KAIZEN / 5S" data-th="KAIZEN / 5S">KAIZEN / 5S</li>
           <li data-en="Depreciation & Asset Management" data-th="ค่าเสื่อมราคา & การจัดการสินทรัพย์">Depreciation & Asset Management</li>
+          <li data-en="Beverage Technology" data-th="เทคโนโลยีเครื่องดื่ม">Beverage Technology</li>
         </ul>
       </div>
 
@@ -728,13 +775,27 @@
         <div class="skill-group-icon">💻</div>
         <div class="skill-group-title" data-en="Software" data-th="ซอฟต์แวร์">Software</div>
         <ul class="skill-list">
+          <li data-en="Mendix (Low-Code)" data-th="Mendix (Low-Code)">Mendix (Low-Code)</li>
           <li>Node.js / JavaScript</li>
           <li>Supabase / PostgreSQL</li>
           <li data-en="ESP32 / Arduino (IoT)" data-th="ESP32 / Arduino (IoT)">ESP32 / Arduino (IoT)</li>
           <li>MQTT Protocol</li>
-          <li>LINE Messaging API</li>
+          <li>LINE LIFF / Messaging API</li>
           <li>HTML / CSS / JS</li>
           <li data-en="REST APIs" data-th="REST APIs">REST APIs</li>
+        </ul>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-icon">🛠️</div>
+        <div class="skill-group-title" data-en="Tools & CAD" data-th="เครื่องมือ & CAD">Tools & CAD</div>
+        <ul class="skill-list">
+          <li>MATLAB / Simulink</li>
+          <li>Minitab</li>
+          <li>SolidWorks</li>
+          <li data-en="PLC Programming" data-th="การโปรแกรม PLC">PLC Programming</li>
+          <li>Microsoft Office</li>
+          <li data-en="Data Analysis" data-th="การวิเคราะห์ข้อมูล">Data Analysis</li>
         </ul>
       </div>
 
@@ -764,17 +825,23 @@
       <div class="lockable-content locked" id="projectsContent">
     <div class="projects-grid">
 
-      <div class="project-card">
-        <div class="project-icon">🍜</div>
+      <div class="project-card featured">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+          <div class="project-icon">🍜</div>
+          <span class="tag" style="font-size:0.65rem;letter-spacing:0.08em;" data-en="LIVE" data-th="LIVE">LIVE</span>
+        </div>
         <div class="project-name">Re:booze</div>
         <div class="project-desc"
-             data-en="Full restaurant operations platform — LINE-based POS ordering, real-time IoT kitchen display board (ESP32), and BOM-based cost analysis dashboard. Deployed for live restaurant use."
-             data-th="แพลตฟอร์มดำเนินงานร้านอาหารครบวงจร — การสั่งซื้อผ่าน POS ของ LINE, บอร์ดแสดงผลครัว IoT real-time (ESP32) และ dashboard วิเคราะห์ต้นทุนแบบ BOM ใช้งานจริงในร้านอาหาร">
-          Full restaurant operations platform — LINE-based POS ordering, real-time IoT kitchen display board (ESP32), and BOM-based cost analysis dashboard. Deployed for live restaurant use.
+             data-en="Full restaurant operations platform built with Node.js &amp; Supabase. Includes a <strong>LINE LIFF POS system</strong> for customer ordering, a real-time <strong>IoT kitchen display</strong> (ESP32/MQTT) for order routing, and a <strong>cost analysis dashboard</strong> (BOM-based food cost %, contribution margin, break-even). Deployed on Railway."
+             data-th="แพลตฟอร์มดำเนินงานร้านอาหารครบวงจร พัฒนาด้วย Node.js &amp; Supabase ประกอบด้วย <strong>LINE LIFF POS system</strong> สำหรับสั่งอาหาร, <strong>IoT kitchen display</strong> real-time (ESP32/MQTT) สำหรับส่งคำสั่งครัว และ <strong>cost analysis dashboard</strong> (food cost %, contribution margin, break-even แบบ BOM) Deploy บน Railway">
+          Full restaurant operations platform built with Node.js &amp; Supabase. Includes a <strong>LINE LIFF POS system</strong> for customer ordering, a real-time <strong>IoT kitchen display</strong> (ESP32/MQTT) for order routing, and a <strong>cost analysis dashboard</strong> (BOM-based food cost %, contribution margin, break-even). Deployed on Railway.
         </div>
         <div class="project-stack">
-          <span class="tag">Node.js</span><span class="tag">Supabase</span><span class="tag">ESP32</span><span class="tag">MQTT</span><span class="tag">LINE API</span><span class="tag">EasySlip</span>
+          <span class="tag">Node.js</span><span class="tag">Supabase</span><span class="tag">LINE LIFF</span><span class="tag">ESP32</span><span class="tag">MQTT</span><span class="tag">Railway</span><span class="tag">EasySlip</span>
         </div>
+        <a class="project-link" href="https://food-order-production-cdba.up.railway.app" target="_blank" rel="noopener">
+          ↗ <span data-en="View Live Demo" data-th="ดู Live Demo">View Live Demo</span>
+        </a>
       </div>
 
       <div class="project-card">
