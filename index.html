@@ -409,6 +409,128 @@
       .btn-ghost { margin-left: 0; margin-top: 0.75rem; }
       .btn + .btn-ghost { display: block; width: fit-content; }
     }
+
+    /* ── LOCK SYSTEM ── */
+    .lockable-wrap { position: relative; min-height: 180px; }
+
+    .lockable-content {
+      transition: filter 0.5s ease, opacity 0.5s ease;
+    }
+    .lockable-content.locked {
+      filter: blur(7px);
+      opacity: 0.25;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .lock-overlay {
+      position: absolute; inset: -1rem;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 10; cursor: pointer;
+      border-radius: 14px;
+    }
+    .lock-overlay.hidden { display: none; }
+
+    .lock-center {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 0.75rem;
+      background: rgba(22,27,39,0.85);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(8px);
+      padding: 2rem 2.5rem; border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+    .lock-icon-big { font-size: 2.5rem; line-height: 1; }
+    .lock-msg {
+      color: var(--muted); font-size: 0.9rem;
+      max-width: 220px; line-height: 1.5;
+    }
+    .lock-btn {
+      font-size: 0.82rem; padding: 0.55rem 1.25rem;
+      pointer-events: all;
+    }
+
+    /* ── PASSCODE MODAL ── */
+    .pass-backdrop {
+      display: none;
+      position: fixed; inset: 0; z-index: 500;
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(4px);
+      align-items: center; justify-content: center;
+    }
+    .pass-backdrop.open { display: flex; }
+
+    .pass-modal {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 2.5rem 2rem;
+      width: min(360px, 90vw);
+      position: relative;
+      text-align: center;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+    }
+    .pass-modal-close {
+      position: absolute; top: 1rem; right: 1rem;
+      background: none; border: none; color: var(--muted);
+      font-size: 1.4rem; cursor: pointer; line-height: 1;
+      transition: color 0.2s;
+    }
+    .pass-modal-close:hover { color: var(--text); }
+    .pass-modal-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+    .pass-modal-title {
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--text); margin-bottom: 0.35rem;
+    }
+    .pass-modal-sub {
+      font-size: 0.82rem; color: var(--muted);
+      margin-bottom: 1.5rem; line-height: 1.5;
+    }
+
+    .pass-digits {
+      display: flex; gap: 0.6rem;
+      justify-content: center; margin-bottom: 1rem;
+    }
+    .pass-digit {
+      width: 48px; height: 56px;
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 10px; color: var(--text);
+      font-size: 1.4rem; font-weight: 700;
+      text-align: center; outline: none;
+      transition: border-color 0.2s;
+      caret-color: var(--accent);
+    }
+    .pass-digit:focus { border-color: var(--accent); }
+    .pass-digit.filled { border-color: rgba(245,158,11,0.4); }
+
+    .pass-error {
+      font-size: 0.82rem; color: #ef4444;
+      min-height: 1.2em; margin-bottom: 0.75rem;
+      transition: opacity 0.2s;
+    }
+    .pass-submit {
+      width: 100%; justify-content: center;
+    }
+
+    /* ── SHAKE ANIMATION ── */
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      15%      { transform: translateX(-9px); }
+      30%      { transform: translateX(9px); }
+      45%      { transform: translateX(-6px); }
+      60%      { transform: translateX(6px); }
+      75%      { transform: translateX(-3px); }
+      90%      { transform: translateX(3px); }
+    }
+    .shake { animation: shake 0.45s cubic-bezier(0.36,0.07,0.19,0.97); }
+
+    /* ── UNLOCK REVEAL ── */
+    @keyframes unlockReveal {
+      from { opacity: 0; transform: translateY(16px) scale(0.98); }
+      to   { opacity: 1; transform: none; }
+    }
+    .unlock-animate { animation: unlockReveal 0.55s cubic-bezier(0.4,0,0.2,1) forwards; }
   </style>
 </head>
 <body>
@@ -518,6 +640,24 @@
     <div class="timeline">
 
       <div class="tl-item">
+        <div class="tl-company" style="display:flex;align-items:center;gap:0.5rem;">
+          TBN
+          <span style="background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.4);color:var(--accent);font-size:0.65rem;padding:0.1rem 0.5rem;border-radius:3px;letter-spacing:0.08em;"
+                data-en="PRESENT" data-th="ปัจจุบัน">PRESENT</span>
+        </div>
+        <div class="tl-role" data-en="Software Engineer" data-th="วิศวกรซอฟต์แวร์">Software Engineer</div>
+        <div class="tl-period" data-en="F&amp;B Tech · Thailand" data-th="F&amp;B Tech · ไทย">F&amp;B Tech · Thailand</div>
+        <div class="tl-desc"
+             data-en="Built full-stack systems for restaurant operations — LINE-based POS, IoT kitchen display boards (ESP32/MQTT), and cost-analysis dashboards. Integrated Supabase for real-time data."
+             data-th="สร้างระบบ full-stack สำหรับการดำเนินงานร้านอาหาร — POS ผ่าน LINE, บอร์ดแสดงผล IoT ในครัว (ESP32/MQTT) และ dashboard วิเคราะห์ต้นทุน เชื่อมต่อ Supabase สำหรับข้อมูล real-time">
+          Built full-stack systems for restaurant operations — LINE-based POS, IoT kitchen display boards (ESP32/MQTT), and cost-analysis dashboards. Integrated Supabase for real-time data.
+        </div>
+        <div class="tl-tags">
+          <span class="tag">Node.js</span><span class="tag">Supabase</span><span class="tag">ESP32</span><span class="tag">MQTT</span><span class="tag">LINE API</span>
+        </div>
+      </div>
+
+      <div class="tl-item">
         <div class="tl-company">Mondelēz International</div>
         <div class="tl-role" data-en="IL6S Engineer" data-th="วิศวกร IL6S">IL6S Engineer</div>
         <div class="tl-period" data-en="Manufacturing · Thailand" data-th="การผลิต · ไทย">Manufacturing · Thailand</div>
@@ -528,20 +668,6 @@
         </div>
         <div class="tl-tags">
           <span class="tag">IL6S</span><span class="tag">Lean</span><span class="tag">OEE</span><span class="tag">6 Sigma</span><span class="tag">CI Pillars</span>
-        </div>
-      </div>
-
-      <div class="tl-item">
-        <div class="tl-company">TBN (The Boring Noodle)</div>
-        <div class="tl-role" data-en="Software Engineer" data-th="วิศวกรซอฟต์แวร์">Software Engineer</div>
-        <div class="tl-period" data-en="F&amp;B Tech · Thailand" data-th="F&amp;B Tech · ไทย">F&amp;B Tech · Thailand</div>
-        <div class="tl-desc"
-             data-en="Built full-stack systems for restaurant operations — LINE-based POS, IoT kitchen display boards (ESP32/MQTT), and cost-analysis dashboards. Integrated Supabase for real-time data."
-             data-th="สร้างระบบ full-stack สำหรับการดำเนินงานร้านอาหาร — POS ผ่าน LINE, บอร์ดแสดงผล IoT ในครัว (ESP32/MQTT) และ dashboard วิเคราะห์ต้นทุน เชื่อมต่อ Supabase สำหรับข้อมูล real-time">
-          Built full-stack systems for restaurant operations — LINE-based POS, IoT kitchen display boards (ESP32/MQTT), and cost-analysis dashboards. Integrated Supabase for real-time data.
-        </div>
-        <div class="tl-tags">
-          <span class="tag">Node.js</span><span class="tag">Supabase</span><span class="tag">ESP32</span><span class="tag">MQTT</span><span class="tag">LINE API</span>
         </div>
       </div>
 
@@ -634,6 +760,8 @@
   <div class="container">
     <p class="section-label" data-en="Selected Work" data-th="ผลงานที่เลือก">Selected Work</p>
     <h2 data-en="Projects" data-th="โปรเจกต์">Projects</h2>
+    <div class="lockable-wrap" id="projectsWrap">
+      <div class="lockable-content locked" id="projectsContent">
     <div class="projects-grid">
 
       <div class="project-card">
@@ -679,7 +807,16 @@
         </div>
       </div>
 
-    </div>
+    </div><!-- /.projects-grid -->
+      </div><!-- /.lockable-content -->
+      <div class="lock-overlay" id="projectsOverlay" onclick="openPassModal()">
+        <div class="lock-center">
+          <div class="lock-icon-big">🔒</div>
+          <p class="lock-msg" data-en="Enter passcode to view content" data-th="กรุณาใส่รหัสเพื่อดูเนื้อหา">Enter passcode to view content</p>
+          <button class="btn lock-btn" data-en="Enter Passcode" data-th="ใส่รหัสผ่าน">Enter Passcode</button>
+        </div>
+      </div>
+    </div><!-- /.lockable-wrap -->
   </div>
 </section>
 
@@ -693,6 +830,8 @@
        data-th="คลิกที่ card ใดๆ เพื่อขยายคำอธิบายละเอียดว่าฉันใช้ concept เหล่านี้ในทางปฏิบัติอย่างไร">
       Click any card to expand a detailed explanation of how I apply these concepts in practice.
     </p>
+    <div class="lockable-wrap" id="knowledgeWrap">
+      <div class="lockable-content locked" id="knowledgeContent">
     <div class="knowledge-grid">
 
       <div class="kcard" onclick="toggleCard(this)">
@@ -791,7 +930,16 @@
         </div>
       </div>
 
-    </div>
+    </div><!-- /.knowledge-grid -->
+      </div><!-- /.lockable-content -->
+      <div class="lock-overlay" id="knowledgeOverlay" onclick="openPassModal()">
+        <div class="lock-center">
+          <div class="lock-icon-big">🔒</div>
+          <p class="lock-msg" data-en="Enter passcode to view content" data-th="กรุณาใส่รหัสเพื่อดูเนื้อหา">Enter passcode to view content</p>
+          <button class="btn lock-btn" data-en="Enter Passcode" data-th="ใส่รหัสผ่าน">Enter Passcode</button>
+        </div>
+      </div>
+    </div><!-- /.lockable-wrap -->
   </div>
 </section>
 
@@ -806,7 +954,7 @@
         Open to collaborations, full-time roles, and conversations about production engineering, IoT systems, or craft brewing.
       </p>
       <div class="contact-links">
-        <a class="contact-link" href="mailto:natapop.srivalai@example.com">
+        <a class="contact-link" href="mailto:natapop.svl@gmail.com">
           <span>✉</span>
           <span>Email</span>
         </a>
@@ -822,6 +970,30 @@
 <footer>
   <p>© 2026 Natapop Srivalai · Built with HTML, CSS &amp; JS</p>
 </footer>
+
+<!-- ── PASSCODE MODAL ── -->
+<div class="pass-backdrop" id="passBackdrop">
+  <div class="pass-modal" id="passModal">
+    <button class="pass-modal-close" onclick="closePassModal()" aria-label="Close">×</button>
+    <div class="pass-modal-icon">🔐</div>
+    <h3 class="pass-modal-title" data-en="Enter Passcode" data-th="ใส่รหัสผ่าน">Enter Passcode</h3>
+    <p class="pass-modal-sub"
+       data-en="Enter the 5-digit code to unlock Projects &amp; Knowledge Showcase."
+       data-th="ใส่รหัส 5 หลักเพื่อปลดล็อก Projects &amp; Knowledge Showcase">
+      Enter the 5-digit code to unlock Projects &amp; Knowledge Showcase.
+    </p>
+    <div class="pass-digits" id="passDigits">
+      <input class="pass-digit" type="text" inputmode="numeric" maxlength="1" autocomplete="off" data-i="0">
+      <input class="pass-digit" type="text" inputmode="numeric" maxlength="1" autocomplete="off" data-i="1">
+      <input class="pass-digit" type="text" inputmode="numeric" maxlength="1" autocomplete="off" data-i="2">
+      <input class="pass-digit" type="text" inputmode="numeric" maxlength="1" autocomplete="off" data-i="3">
+      <input class="pass-digit" type="text" inputmode="numeric" maxlength="1" autocomplete="off" data-i="4">
+    </div>
+    <p class="pass-error" id="passError"></p>
+    <button class="btn pass-submit" id="passSubmit" onclick="submitPasscode()"
+            data-en="Unlock" data-th="ปลดล็อก">Unlock</button>
+  </div>
+</div>
 
 <script>
   // ── Language Toggle (synced desktop + mobile) ──
@@ -927,6 +1099,110 @@
   }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ── PASSCODE SYSTEM ──
+  const PASSCODE = '30930';
+  const backdrop = document.getElementById('passBackdrop');
+  const modal    = document.getElementById('passModal');
+  const digits   = Array.from(document.querySelectorAll('.pass-digit'));
+  const errEl    = document.getElementById('passError');
+
+  // Restore unlock from localStorage
+  if (localStorage.getItem('portfolio_unlocked') === '1') {
+    unlockSections(false);
+  }
+
+  function openPassModal() {
+    backdrop.classList.add('open');
+    digits.forEach(d => { d.value = ''; d.classList.remove('filled'); });
+    errEl.textContent = '';
+    setTimeout(() => digits[0].focus(), 80);
+    // re-apply lang to modal elements
+    applyLang();
+  }
+
+  function closePassModal() {
+    backdrop.classList.remove('open');
+  }
+
+  // Close on backdrop click
+  backdrop.addEventListener('click', e => { if (e.target === backdrop) closePassModal(); });
+
+  // Close on Escape
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closePassModal(); });
+
+  // Digit input logic
+  digits.forEach((input, idx) => {
+    input.addEventListener('input', e => {
+      const val = e.target.value.replace(/\D/g, '');
+      e.target.value = val ? val[val.length - 1] : '';
+      e.target.classList.toggle('filled', !!e.target.value);
+      errEl.textContent = '';
+      if (val && idx < digits.length - 1) digits[idx + 1].focus();
+    });
+
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Backspace' && !input.value && idx > 0) {
+        digits[idx - 1].focus();
+        digits[idx - 1].value = '';
+        digits[idx - 1].classList.remove('filled');
+      }
+      if (e.key === 'Enter') submitPasscode();
+    });
+
+    // Select all on focus for easier correction
+    input.addEventListener('focus', () => input.select());
+  });
+
+  function submitPasscode() {
+    const entered = digits.map(d => d.value).join('');
+    if (entered.length < 5) {
+      showError(lang === 'th' ? 'กรุณาใส่ครบ 5 หลัก' : 'Please enter all 5 digits');
+      return;
+    }
+    if (entered === PASSCODE) {
+      closePassModal();
+      localStorage.setItem('portfolio_unlocked', '1');
+      unlockSections(true);
+    } else {
+      showError(lang === 'th' ? 'รหัสผิด กรุณาลองใหม่' : 'Incorrect passcode. Try again.');
+      modal.classList.remove('shake');
+      void modal.offsetWidth; // reflow to restart animation
+      modal.classList.add('shake');
+      digits.forEach(d => { d.value = ''; d.classList.remove('filled'); });
+      digits[0].focus();
+      modal.addEventListener('animationend', () => modal.classList.remove('shake'), { once: true });
+    }
+  }
+
+  function showError(msg) {
+    errEl.textContent = msg;
+    modal.classList.remove('shake');
+    void modal.offsetWidth;
+    modal.classList.add('shake');
+    modal.addEventListener('animationend', () => modal.classList.remove('shake'), { once: true });
+  }
+
+  function unlockSections(animate) {
+    const contents = ['projectsContent', 'knowledgeContent'];
+    const overlays  = ['projectsOverlay', 'knowledgeOverlay'];
+
+    overlays.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.classList.add('hidden');
+    });
+
+    contents.forEach((id, i) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.remove('locked');
+      if (animate) {
+        el.style.setProperty('--delay', i * 80);
+        el.classList.add('unlock-animate');
+        el.addEventListener('animationend', () => el.classList.remove('unlock-animate'), { once: true });
+      }
+    });
+  }
 </script>
 </body>
 </html>
